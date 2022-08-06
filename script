@@ -18,68 +18,222 @@ Tab1:Button("anti lag",function()
     print("Hi :]")
 end)
 
-Tab1:Button("anti lag ??",function()
-    repeat wait(5) until game:IsLoaded() and #game:GetService("Players"):GetChildren() > 0
-
-warn("Loaded gay scripts")
-gayplace = game
-local EspData = {
-	[1] = game:GetService("Workspace"):GetDescendants(),
-}
-local IsAData = {
-	[1] = "Part",
-	[2] = "UnionOperation",
-	[3] = "WedgePart",
-	[4] = "MeshPart",
-}
-
-local ColorData = {
-	["1"] = Color3.fromRGB(0,0,0), -- map
-	["2"] = Color3.fromRGB(85, 255, 255) -- player
-
-}
-local function DoThing(object, color, Type)
-	if object then
-		object.Color = color
-	end
-end
-local function IsA(thing, tab, Type)
-	if thing:FindFirstChildOfClass("Humanoid") or thing:FindFirstChildWhichIsA("Humanoid") or thing:FindFirstChild("Humanoid") then
-		local playermodel = thing:GetDescendants()
-
-		for l , j in next, playermodel do
-			for _ , b in pairs(tab) do
-				if j:IsA(b) then
-					DoThing(j , Color3.fromRGB(ColorData["2"]), 2)
-
+Tab1:Button("ESP",function()
+    local function ESP()
+for i,v in pairs(game.Players:GetChildren()) do
+		if v ~= game.Players.LocalPlayer then
+			if v.Character.Humanoid.RigType == "R6" then
+				local ESP1 = Instance.new("BillboardGui", workspace.Camera)
+				local ESP2 = Instance.new("Frame", ESP1)
+				ESP1.AlwaysOnTop = true
+				ESP1.Enabled = true
+				ESP1.Size = UDim2.new(4.5,0,6,0)
+				ESP1.Name = "ESP"
+				ESP1.Adornee = v.Character.Torso
+				ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
+					if v.Team ~= nil then	
+						local function Traingle()
+							if v.Team ~= game.Players.LocalPlayer.Team then
+								ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+								ESP2.BackgroundTransparency = 0.75
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							else
+								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+								ESP2.BackgroundTransparency = 0.8
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							end
+						end
+						Traingle()
+					else		
+						wait(2)
+						local function Traingle()
+							if v.Team ~= game.Players.LocalPlayer.Team then
+								ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+								ESP2.BackgroundTransparency = 0.75
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							else
+								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+								ESP2.BackgroundTransparency = 0.8
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							end
+						end
+						Traingle()
+					end
+			else
+				local ESP1 = Instance.new("BillboardGui", workspace.Camera)
+				local ESP2 = Instance.new("Frame", ESP1)
+				ESP1.AlwaysOnTop = true
+				ESP1.Enabled = true
+				ESP1.Size = UDim2.new(4.5,0,6,0)
+				ESP1.Name = "ESP"
+				ESP1.Adornee = v.Character.UpperTorso
+				ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
+					if v.Team ~= nil then	
+						local function Traingle()
+							if v.Team ~= game.Players.LocalPlayer.Team then
+									ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+								ESP2.BackgroundTransparency = 0.75
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							else
+								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+								ESP2.BackgroundTransparency = 0.8
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							end
+						end
+						Traingle()
+					else		
+						wait(2)
+						local function Traingle()
+							if v.Team ~= game.Players.LocalPlayer.Team then
+								ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+								ESP2.BackgroundTransparency = 0.75
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							else
+								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+								ESP2.BackgroundTransparency = 0.8
+								ESP2.BorderColor3 = Color3.new(0,0,0)
+								ESP2.BorderSizePixel = 2
+								ESP2.Size = UDim2.new(1,0,1,0)
+							end
+						end
+						Traingle()
+					end
 				end
 			end
 		end
-	else
-		for _ , b in pairs(tab) do
-			if thing:IsA(b) then
-				DoThing(thing , Color3.fromRGB(Type and ColorData[Type]), Type)
-			else --player
-				--	warn("Player Model near")
+end
 
+ESP()
+
+game.Players.PlayerAdded:connect(function(Player)
+wait(2)
+if Player ~= game.Players.LocalPlayer then	
+	if Player.Character.Humanoid.RigType == "R6" then
+		local ESP1 = Instance.new("BillboardGui", workspace.Camera)
+		local ESP2 = Instance.new("Frame", ESP1)
+		ESP1.AlwaysOnTop = true
+		ESP1.Enabled = true
+		ESP1.Size = UDim2.new(4.5,0,6,0)
+		ESP1.Name = "ESP"
+		ESP1.Adornee = Player.Character.Torso
+		ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
+			if Player.Team ~= nil then	
+				local function Traingle()
+					if Player.Team ~= game.Players.LocalPlayer.Team then
+						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+						ESP2.BackgroundTransparency = 0.75
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					else
+						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+						ESP2.BackgroundTransparency = 0.8
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					end
+				end
+				Traingle()
+			else		
+				wait(2)
+				local function Traingle()
+				if Player.Team ~= game.Players.LocalPlayer.Team then
+						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+						ESP2.BackgroundTransparency = 0.75
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					else
+						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+						ESP2.BackgroundTransparency = 0.8
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					end
+				end
+				Traingle()
+			end
+	else
+		local ESP1 = Instance.new("BillboardGui", workspace.Camera)
+		local ESP2 = Instance.new("Frame", ESP1)
+		ESP1.AlwaysOnTop = true
+		ESP1.Enabled = true
+		ESP1.Size = UDim2.new(4.5,0,6,0)
+		ESP1.Name = "ESP"
+		ESP1.Adornee = Player.Character.UpperTorso
+		ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
+			if Player.Team ~= nil then	
+				local function Traingle()
+					if Player.Team ~= game.Players.LocalPlayer.Team then
+						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+						ESP2.BackgroundTransparency = 0.75
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					else
+						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+						ESP2.BackgroundTransparency = 0.8
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					end
+				end
+			Traingle()
+		else		
+			wait(2)
+				local function Traingle()
+					if Player.Team ~= game.Players.LocalPlayer.Team then
+						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
+						ESP2.BackgroundTransparency = 0.75
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					else
+						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
+						ESP2.BackgroundTransparency = 0.8
+						ESP2.BorderColor3 = Color3.new(0,0,0)
+						ESP2.BorderSizePixel = 2
+						ESP2.Size = UDim2.new(1,0,1,0)
+					end
+				end
+				Traingle()
 			end
 		end
 	end
-end
-local function Start()
-	for nun, gdata in pairs(EspData) do
-		for i , v in next, gdata do
-			if v then
-				IsA(v, IsAData, nun == 1 and "1" or "2")
-			end
-		end
-	end
-end
-game:GetService("Workspace").ChildAdded:Connect(function(e)
-	EspData[1][#EspData[1]+1]=e
 end)
 
-Start()
+function onKeyPress(actionName, userInputState, inputObject)
+	if userInputState == Enum.UserInputState.Begin then
+		local Resetting = Instance.new("Hint", game.Workspace)
+		Resetting.Text = "Resetting"
+		for i,v in pairs(game.Workspace.Camera:GetChildren()) do
+			if v.Name == "ESP" then
+				v:Destroy()
+			end
+		end
+		wait()
+		ESP()
+		Resetting.Text = "Resetting Done"
+		wait(2)
+		Resetting:Destroy()
+	end
+end
+ 
+
 end)
 
 -- Textbot
