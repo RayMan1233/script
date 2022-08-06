@@ -18,8 +18,68 @@ Tab1:Button("anti lag",function()
     print("Hi :]")
 end)
 
-Tab1:Button("Button No.2",function()
-    print("Yo :]")
+Tab1:Button("anti lag ??",function()
+    repeat wait(5) until game:IsLoaded() and #game:GetService("Players"):GetChildren() > 0
+
+warn("Loaded gay scripts")
+gayplace = game
+local EspData = {
+	[1] = game:GetService("Workspace"):GetDescendants(),
+}
+local IsAData = {
+	[1] = "Part",
+	[2] = "UnionOperation",
+	[3] = "WedgePart",
+	[4] = "MeshPart",
+}
+
+local ColorData = {
+	["1"] = Color3.fromRGB(0,0,0), -- map
+	["2"] = Color3.fromRGB(85, 255, 255) -- player
+
+}
+local function DoThing(object, color, Type)
+	if object then
+		object.Color = color
+	end
+end
+local function IsA(thing, tab, Type)
+	if thing:FindFirstChildOfClass("Humanoid") or thing:FindFirstChildWhichIsA("Humanoid") or thing:FindFirstChild("Humanoid") then
+		local playermodel = thing:GetDescendants()
+
+		for l , j in next, playermodel do
+			for _ , b in pairs(tab) do
+				if j:IsA(b) then
+					DoThing(j , Color3.fromRGB(ColorData["2"]), 2)
+
+				end
+			end
+		end
+	else
+		for _ , b in pairs(tab) do
+			if thing:IsA(b) then
+				DoThing(thing , Color3.fromRGB(Type and ColorData[Type]), Type)
+			else --player
+				--	warn("Player Model near")
+
+			end
+		end
+	end
+end
+local function Start()
+	for nun, gdata in pairs(EspData) do
+		for i , v in next, gdata do
+			if v then
+				IsA(v, IsAData, nun == 1 and "1" or "2")
+			end
+		end
+	end
+end
+game:GetService("Workspace").ChildAdded:Connect(function(e)
+	EspData[1][#EspData[1]+1]=e
+end)
+
+Start()
 end)
 
 -- Textbot
