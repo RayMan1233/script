@@ -1,0 +1,52 @@
+print("hi")
+
+-- Library
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/RayMan1233/library-UI/main/UI"))()
+
+-- Create Window
+local Window = Library:Create("CATHUB","GUI")
+
+-- Tab
+local Tab1 = Window:Tab("HOME",true)
+local Tab2 = Window:Tab("script",true)
+local Tab3 = Window:Tab("workspace",true)
+
+Tab1:Label("main")
+
+-- Button
+Tab1:Button("anti lag",function()
+    print("Hi :]")
+end)
+
+Tab1:Button("Button No.2",function()
+    print("Yo :]")
+end)
+
+-- Textbot
+Tab1:Textbox("Textbox","Enter Text",function(txt)
+    game.Players.LocalPlayer.Humanoid.Walkspeed = txt
+end)
+
+-- A Keybind (For PC Only Use It In Mobile By Keyboard Script)
+Tab1:Keybind("Keybind",Enum.KeyCode.F,function()
+    print("Pressed key")
+end)
+
+-- Dropdown
+Tab1:Dropdown("Dropdown",{"Option 1","Option 2","Option 3"},function(current)
+    print(current)
+end)
+
+-- Toggle aka Switch
+Tab1:Toggle("Toggle",function(x)
+    print(x)
+end)
+
+-- Slider (Ill Not Suggest It For Mobile Cuz Its Bugs)
+Tab1:Slider("Slider",16,500,function(s) -- Tab1:Slider("Yo", Minimum, Maximum, function(s)
+    print(s)
+end)
+
+Tab3:Dropdown("safe zone",{"zone 1","zone 3 2","error"},function(current)
+    print(current)
+end)
