@@ -1,401 +1,119 @@
--- // Constants \\ --
--- [ Services ] --
-local Services = setmetatable({}, {__index = function(Self, Index)
-	local NewService = game.GetService(game, Index)
-	if NewService then
-		Self[Index] = NewService
-	end
-	return NewService
-end})
+local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/aaaa"))()
 
--- [ LocalPlayer ] --
-local LocalPlayer = Services.Players.LocalPlayer
+local UI = GUI:CreateWindow("the um","lop")
 
--- // Functions \\ --
-local function PlayerAdded(Player)
-	local Detected = false
-	local Character;
-	local PrimaryPart;
+local Home = UI:addPage("Home",1,true,6)
 
-	local function CharacterAdded(NewCharacter)
-		Character = NewCharacter
-		repeat
-			wait()
-			PrimaryPart = NewCharacter:FindFirstChild("HumanoidRootPart")
-		until PrimaryPart
-		Detected = false
-	end
+Home:addLabel("This is a Label","Lol this funny")
 
-	CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
-	Player.CharacterAdded:Connect(CharacterAdded)
-	Services.RunService.Heartbeat:Connect(function()
-		if (Character and Character:IsDescendantOf(workspace)) and (PrimaryPart and PrimaryPart:IsDescendantOf(Character)) then
-			if PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 or PrimaryPart.AssemblyLinearVelocity.Magnitude > 100 then
-				if Detected == false then
-					game.StarterGui:SetCore("ChatMakeSystemMessage", {
-						Text = "Fall detected, Player: " .. tostring(Player);
-						Color = Color3.fromRGB(255, 200, 0);
-					})
-				end
-				Detected = true
-				for i,v in ipairs(Character:GetDescendants()) do
-					if v:IsA("BasePart") then
-						v.CanCollide = false
-						v.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-						v.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-						v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-					end
-				end
-				PrimaryPart.CanCollide = false
-				PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-				PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-				PrimaryPart.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
-			end
-		end
-	end)
-end
-
--- // Event Listeners \\ --
-for i,v in ipairs(Services.Players:GetPlayers()) do
-	if v ~= LocalPlayer then
-		PlayerAdded(v)
-	end
-end
-Services.Players.PlayerAdded:Connect(PlayerAdded)
-
-local LastPosition = nil
-Services.RunService.Heartbeat:Connect(function()
-	pcall(function()
-		local PrimaryPart = LocalPlayer.Character.PrimaryPart
-		if PrimaryPart.AssemblyLinearVelocity.Magnitude > 250 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 250 then
-			PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
-			PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
-			PrimaryPart.CFrame = LastPosition
-
-			game.StarterGui:SetCore("ChatMakeSystemMessage", {
-				Text = "You were flung. Neutralizing velocity.";
-				Color = Color3.fromRGB(255, 0, 0);
-			})
-		elseif PrimaryPart.AssemblyLinearVelocity.Magnitude < 50 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 then
-			LastPosition = PrimaryPart.CFrame
-		end
-	end)
+Home:addButton("This is a button",function()
+    game.StarterGui:SetCore("SendNotification",{
+        Title = "Clicked";
+        Text = "Lo";
+    })
 end)
 
--- Library
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/RayMan1233/library-UI/main/UI"))()
-
--- Create Window
-local Window = Library:Create("CATHUB","GUI")
-
--- Tab
-local Tab1 = Window:Tab("HOME",true)
-local Tab2 = Window:Tab("script",true)
-local Tab3 = Window:Tab("workspace",true)
-
-Tab1:Label("main")
-
--- Button
-Tab1:Button("headless",function()
-   local lp = game:GetService "Players".LocalPlayer
-if lp.Character:FindFirstChild "Head" then
-    local char = lp.Character
-    char.Archivable = true
-    local new = char:Clone()
-    new.Parent = workspace
-    lp.Character = new
-    wait(2)
-    local oldhum = char:FindFirstChildWhichIsA "Humanoid"
-    local newhum = oldhum:Clone()
-    newhum.Parent = char
-    newhum.RequiresNeck = false
-    oldhum.Parent = nil
-    wait(2)
-    lp.Character = char
-    new:Destroy()
-    wait(1)
-    newhum:GetPropertyChangedSignal("Health"):Connect(
-        function()
-            if newhum.Health <= 0 then
-                oldhum.Parent = lp.Character
-                wait(1)
-                oldhum:Destroy()
-            end
-        end)
-    workspace.CurrentCamera.CameraSubject = char
-    if char:FindFirstChild "Animate" then
-        char.Animate.Disabled = true
-        wait(.1)
-        char.Animate.Disabled = false
+Home:addToggle("This is a Toggle",function(value)
+    print(value)
+    if value == false then 
+        game.StarterGui:SetCore("SendNotification",{
+            Title = "Toggle";
+            Text = "false";
+        })
+    else 
+        game.StarterGui:SetCore("SendNotification",{
+            Title = "Toggle";
+            Text = "true";
+        })
     end
-    lp.Character:FindFirstChild "Head":Destroy()
-end
 end)
 
-Tab1:Button("ESP",function()
+Home:addSlider("This is a Slider",16,100,function(value)
+    print(value)
+end)
 
- local function callback(Text)
- if Text == "Button1 text" then
-  print ("Answer")
-elseif Text == ("Button2 text") then
- print ("Answer2")
- end
-end
+Home:addTextBox("This is a TextBox","Um",function(value)
+    game.StarterGui:SetCore("SendNotification",{
+        Title = "Wrote";
+        Text = value;
+    })
+end)
 
-local NotificationBindable = Instance.new("BindableFunction")
-NotificationBindable.OnInvoke = callback
---
-game.StarterGui:SetCore("SendNotification",  {
- Title = "install";
- Text = "ESP install player";
- Icon = "";
- Duration = 5;
- Button1 = "loading..";
- Button2 = "install";
- Callback = NotificationBindable;
-})
-    local function ESP()
-for i,v in pairs(game.Players:GetChildren()) do
-		if v ~= game.Players.LocalPlayer then
-			if v.Character.Humanoid.RigType == "R6" then
-				local ESP1 = Instance.new("BillboardGui", workspace.Camera)
-				local ESP2 = Instance.new("Frame", ESP1)
-				ESP1.AlwaysOnTop = true
-				ESP1.Enabled = true
-				ESP1.Size = UDim2.new(4.5,0,6,0)
-				ESP1.Name = "ESP"
-				ESP1.Adornee = v.Character.Torso
-				ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
-					if v.Team ~= nil then	
-						local function Traingle()
-							if v.Team ~= game.Players.LocalPlayer.Team then
-								ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-								ESP2.BackgroundTransparency = 0.75
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							else
-								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-								ESP2.BackgroundTransparency = 0.8
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							end
-						end
-						Traingle()
-					else		
-						wait(2)
-						local function Traingle()
-							if v.Team ~= game.Players.LocalPlayer.Team then
-								ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-								ESP2.BackgroundTransparency = 0.75
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							else
-								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-								ESP2.BackgroundTransparency = 0.8
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							end
-						end
-						Traingle()
-					end
-			else
-				local ESP1 = Instance.new("BillboardGui", workspace.Camera)
-				local ESP2 = Instance.new("Frame", ESP1)
-				ESP1.AlwaysOnTop = true
-				ESP1.Enabled = true
-				ESP1.Size = UDim2.new(4.5,0,6,0)
-				ESP1.Name = "ESP"
-				ESP1.Adornee = v.Character.UpperTorso
-				ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
-					if v.Team ~= nil then	
-						local function Traingle()
-							if v.Team ~= game.Players.LocalPlayer.Team then
-									ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-								ESP2.BackgroundTransparency = 0.75
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							else
-								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-								ESP2.BackgroundTransparency = 0.8
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							end
-						end
-						Traingle()
-					else		
-						wait(2)
-						local function Traingle()
-							if v.Team ~= game.Players.LocalPlayer.Team then
-								ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-								ESP2.BackgroundTransparency = 0.75
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							else
-								ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-								ESP2.BackgroundTransparency = 0.8
-								ESP2.BorderColor3 = Color3.new(0,0,0)
-								ESP2.BorderSizePixel = 2
-								ESP2.Size = UDim2.new(1,0,1,0)
-							end
-						end
-						Traingle()
-					end
-				end
-			end
-		end
+Home:addDropdown("This is a Dropdown",{"Um","Yep","Lop","GG"},1,function(value)
+    game.StarterGui:SetCore("SendNotification",{
+        Title = "Selected :";
+        Text = value;
+    }) 
+end)
+
+-- Just an example of how you would actually use it i guess
+
+local LP = UI:addPage("Local",2,false,6)
+
+-- Label
+
+LP:addLabel("Local","Don't use in games with anti cheats")
+
+--- Button
+
+LP:addButton("DIE",function()
+    game.Players.LocalPlayer.Character.Humanoid.Health = 0
+end)
+
+-- Toggle
+
+LP:addToggle("Sprint",function(value)
+    if value == false then
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+    else
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 24
+    end
+end)
+
+-- Slider
+
+LP:addSlider("WalkSpeed",16,150,function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end)
+
+-- Textbox
+
+LP:addTextBox("Jump Power / 50 is default","Number here",function(value)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end)
+
+-- Dropdown 
+
+local PLIST = {}
+
+for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+    table.insert(PLIST,v.DisplayName)
 end
 
-ESP()
-
-game.Players.PlayerAdded:connect(function(Player)
-wait(2)
-if Player ~= game.Players.LocalPlayer then	
-	if Player.Character.Humanoid.RigType == "R6" then
-		local ESP1 = Instance.new("BillboardGui", workspace.Camera)
-		local ESP2 = Instance.new("Frame", ESP1)
-		ESP1.AlwaysOnTop = true
-		ESP1.Enabled = true
-		ESP1.Size = UDim2.new(4.5,0,6,0)
-		ESP1.Name = "ESP"
-		ESP1.Adornee = Player.Character.Torso
-		ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
-			if Player.Team ~= nil then	
-				local function Traingle()
-					if Player.Team ~= game.Players.LocalPlayer.Team then
-						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-						ESP2.BackgroundTransparency = 0.75
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					else
-						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-						ESP2.BackgroundTransparency = 0.8
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					end
-				end
-				Traingle()
-			else		
-				wait(2)
-				local function Traingle()
-				if Player.Team ~= game.Players.LocalPlayer.Team then
-						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-						ESP2.BackgroundTransparency = 0.75
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					else
-						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-						ESP2.BackgroundTransparency = 0.8
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					end
-				end
-				Traingle()
-			end
-	else
-		local ESP1 = Instance.new("BillboardGui", workspace.Camera)
-		local ESP2 = Instance.new("Frame", ESP1)
-		ESP1.AlwaysOnTop = true
-		ESP1.Enabled = true
-		ESP1.Size = UDim2.new(4.5,0,6,0)
-		ESP1.Name = "ESP"
-		ESP1.Adornee = Player.Character.UpperTorso
-		ESP1.StudsOffset = Vector3.new(0, -0.6, 0)
-			if Player.Team ~= nil then	
-				local function Traingle()
-					if Player.Team ~= game.Players.LocalPlayer.Team then
-						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-						ESP2.BackgroundTransparency = 0.75
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					else
-						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-						ESP2.BackgroundTransparency = 0.8
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					end
-				end
-			Traingle()
-		else		
-			wait(2)
-				local function Traingle()
-					if Player.Team ~= game.Players.LocalPlayer.Team then
-						ESP2.BackgroundColor3 = Color3.new(200, 0, 0)
-						ESP2.BackgroundTransparency = 0.75
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					else
-						ESP2.BackgroundColor3 = Color3.new(0, 0, 200)
-						ESP2.BackgroundTransparency = 0.8
-						ESP2.BorderColor3 = Color3.new(0,0,0)
-						ESP2.BorderSizePixel = 2
-						ESP2.Size = UDim2.new(1,0,1,0)
-					end
-				end
-				Traingle()
-			end
-		end
-	end
+LP:addDropdown("Teleport to Player",PLIST,4,function(value)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
 end)
 
-function onKeyPress(actionName, userInputState, inputObject)
-	if userInputState == Enum.UserInputState.Begin then
-		local Resetting = Instance.new("Hint", game.Workspace)
-		Resetting.Text = "Resetting"
-		for i,v in pairs(game.Workspace.Camera:GetChildren()) do
-			if v.Name == "ESP" then
-				v:Destroy()
-			end
-		end
-		wait()
-		ESP()
-		Resetting.Text = "Resetting Done"
-		wait(2)
-		Resetting:Destroy()
-	end
-end
- 
 
+-- Spam 
+
+LP:addLabel("Spam","This is just to show how it looks with more ui elements")
+
+LP:addDropdown("Teleport to Player",PLIST,4,function(value)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
 end)
 
--- Textbot
-Tab1:Textbox("Textbox","Enter Text",function(txt)
-    game.Players.LocalPlayer.Humanoid.Walkspeed = txt
+
+LP:addDropdown("Teleport to Player",PLIST,4,function(value)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
 end)
 
--- A Keybind (For PC Only Use It In Mobile By Keyboard Script)
-Tab1:Keybind("Keybind",Enum.KeyCode.F,function()
-    print("Pressed key")
+
+LP:addDropdown("Teleport to Player",PLIST,4,function(value)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
 end)
 
--- Dropdown
-Tab1:Dropdown("Dropdown",{"Option 1","Option 2","Option 3"},function(current)
-    print(current)
-end)
 
--- Toggle aka Switch
-Tab1:Toggle("Toggle",function(x)
-    print(x)
-end)
-
--- Slider (Ill Not Suggest It For Mobile Cuz Its Bugs)
-Tab1:Slider("Slider",16,500,function(s) -- Tab1:Slider("Yo", Minimum, Maximum, function(s)
-    print(s)
-end)
-
-Tab3:Dropdown("safe zone",{"zone 1","zone 3 2","error"},function(current)
-    print(current)
+LP:addDropdown("Teleport to Player",PLIST,4,function(value)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
 end)
