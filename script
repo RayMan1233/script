@@ -6,10 +6,44 @@ local Home = UI:addPage("Home",1,true,6)
 
 Home:addLabel("HOME/MAIN","sometime you getting banned or kick")
 
-Home:addButton("This is a button",function()
+Home:addButton("headless",function()
+
+local lp = game:GetService "Players".LocalPlayer
+if lp.Character:FindFirstChild "Head" then
+    local char = lp.Character
+    char.Archivable = true
+    local new = char:Clone()
+    new.Parent = workspace
+    lp.Character = new
+    wait(2)
+    local oldhum = char:FindFirstChildWhichIsA "Humanoid"
+    local newhum = oldhum:Clone()
+    newhum.Parent = char
+    newhum.RequiresNeck = false
+    oldhum.Parent = nil
+    wait(2)
+    lp.Character = char
+    new:Destroy()
+    wait(1)
+    newhum:GetPropertyChangedSignal("Health"):Connect(
+        function()
+            if newhum.Health <= 0 then
+                oldhum.Parent = lp.Character
+                wait(1)
+                oldhum:Destroy()
+            end
+        end)
+    workspace.CurrentCamera.CameraSubject = char
+    if char:FindFirstChild "Animate" then
+        char.Animate.Disabled = true
+        wait(.1)
+        char.Animate.Disabled = false
+    end
+    lp.Character:FindFirstChild "Head":Destroy()
+end
     game.StarterGui:SetCore("SendNotification",{
-        Title = "Clicked";
-        Text = "Lo";
+        Title = "loaded";
+        Text = "sometime you getting ban";
     })
 end)
 
@@ -48,7 +82,7 @@ end)
 
 -- Just an example of how you would actually use it i guess
 
-local LP = UI:addPage("Local",2,false,6)
+local LP = UI:addPage("Player",2,false,6)
 
 -- Label
 
