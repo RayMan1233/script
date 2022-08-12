@@ -1,3 +1,7 @@
+
+
+
+
 local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/aaaa"))()
 
 local UI = GUI:CreateWindow("Dark HUBS","10.0")
@@ -143,11 +147,23 @@ LP:addDropdown("Teleport to Player",PLIST,4,function(value)
 end)
 
 
-LP:addDropdown("Teleport to Player",PLIST,4,function(value)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
-end)
+local animation = UI:addPage("animation",2,false,6)
 
+animation:addLabel("FREE NEW animation","working in R15")
 
-LP:addDropdown("Teleport to Player",PLIST,4,function(value)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =  game.Players[value].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,1)
+animation:addButton("zombie",function()
+ while true do
+        wait(1)
+        for i, player in ipairs(game.Players:GetChildren()) do
+        local Animate = game.Players.LocalPlayer.Character.Animate
+    Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+    Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+    Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
+    Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
+    Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+    game.Players.LocalPlayer.Character.Humanoid.Jump = false
+        end
+    end
 end)
