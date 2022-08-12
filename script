@@ -38,7 +38,8 @@ local Page = UI.New({
 
 Page.Button({
     Text = "anti kill",
-    Float_Height = "15" -- Your float height | 5 is default
+ Callback = function()
+      Float_Height = "15" -- Your float height | 5 is default
 
 local i=1
 G=game;
@@ -52,6 +53,7 @@ for i=1,i do
 repeat p:FindFirstChild("Humanoid").HipHeight=Float_Height-n _(t)p:FindFirstChild("Humanoid").HipHeight=Float_Height+n _(t) until
 p:FindFirstChild("Humanoid").Health == 0
 end
+    end
 })
 
 
